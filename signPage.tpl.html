@@ -1,0 +1,13 @@
+  <section ng-repeat="event in signPageEvents">
+    <hr>
+    <h2>
+      {{event.event_name}}
+    </h2>
+    <p>
+      {{event.start|date:'shortTime'}} to {{event.end|date:'shortTime'}}
+    </p>
+    <p ng-repeat="session in event.sessions">{{session.room.name}}</p>
+    <hr>
+  </section>
+  <section ng-transclude>
+  </section>
