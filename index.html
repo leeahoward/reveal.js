@@ -31,9 +31,12 @@
 	</head>
 
 	<body ng-controller="SignageCtrl">
+    <div style="border:0px;width:100%;float:left;">
+      <span style="position:absolute;color:white;left:900px;top:20px;font-size:70px;font-family: Lato, sans-serif;">{{currentTime|date:'shortTime'}}</span>
+      <img style="border:0px;width:100%;float:left;" src="images/wflogos.jpg" />
+    </div>
 
 		<div class="reveal">
-
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
         <section sign-page sign-page-events="signage.events">

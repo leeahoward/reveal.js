@@ -4,6 +4,7 @@ angular.module('signage',[],[function(){
 }])
 .controller('SignageCtrl',['$log','$http','$scope','$timeout',function($log, $http, $scope,$timeout){
   $scope.message="Welcome to Northwest AHEC at Deacon Tower";
+  $scope.currentTime=new Date();
 
   $scope.signage = {
     sharepoint:[],
@@ -43,13 +44,22 @@ angular.module('signage',[],[function(){
       }
 
       if($scope.signage.events.map){
-        $scope.signage.events.map(function(event){
+        $scope.signage.events = $scope.signage.events.map(function(event){
           event.end = Date.parse(event.event_end_ts);
           event.start = Date.parse(event.event_start_ts);
           event.sessions.map(function(session){
             session.begin=Date.parse(session.session_begin_ts);
             session.end=Date.parse(session.session_end_ts);
           });
+          return event;
+        }).filter(function(event){
+          var d = new Date();
+          $log.info(event);
+          $log.info(d.getTime());
+          if(event.end>d.getTime() && event.start<d.getTime()){
+            return true;
+          }
+          return false;
         });
       }
 
@@ -71,6 +81,9 @@ angular.module('signage',[],[function(){
   }  
 
   $scope.loadEventData();
+  $timeout(function(){
+    $scope.currentTime = new Date();
+  },60000);
 }])
 .directive('signPage',['$parse','$log',function compileFn($parse,$log){
   return {
