@@ -1,15 +1,18 @@
-angular.module('signage',[],[function(){
+angular.module('signage',['WeatherClock'],[function(){
 
 
 }])
 .controller('SignageCtrl',['$log','$http','$scope','$timeout',function($log, $http, $scope,$timeout){
   $scope.message="Welcome to Northwest AHEC at Deacon Tower";
-  $scope.currentTime=new Date();
+  $scope.data = {currentTime:new Date()};
 
   $scope.signage = {
     sharepoint:[],
     events:[]
   };
+
+
+
 
   $scope.loadEventData = function(){
     $log.info('loading Data');
@@ -80,15 +83,41 @@ angular.module('signage',[],[function(){
     });//end success
   }  
 
+  $scope.loadWeatherData = function(){
+
+    $log.info('loading Data');
+    return $http({
+      url: '/moodle/jdigiclock/lib/proxy/php/proxy.php?location=NAM|US|NC|WINSTON-SALEM&metric=0',
+      method:'GET'
+    })
+    .success(
+      function(response){
+        $log.info(response);
+      }
+    ).error(
+      function(){
+
+      }
+    );
+  }
+
   $scope.loadEventData();
-  $timeout(function(){
-    $scope.currentTime = new Date();
-  },60000);
+  //$scope.loadWeatherData();
+
+  /*
+  function updateTime(){
+    $timeout(function(){
+      $scope.data.currentTime = new Date();
+      updateTime();
+    },60000);
+  }
+  updateTime();
+  */
 }])
 .directive('signPage',['$parse','$log',function compileFn($parse,$log){
   return {
     restrict:'A',
-    templateUrl:'signPage.tpl.html',
+    templateUrl:'partials/signPage.tpl.html',
     transclude:true,
     scope:{
       signPageEvents:'='
@@ -97,4 +126,10 @@ angular.module('signage',[],[function(){
       $log.info('linkFn');
     }//end link function
   };
+}]).filter('classroomImage', ['$log',function($log) {
+  return function(val){
+    var tmp = val.replace(/\s+/g,'') + '.jpg'; 
+    $log.info(tmp);
+    return tmp;
+  }
 }]);

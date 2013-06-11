@@ -1,0 +1,62 @@
+<div ng-show="loadingWeather">
+  Loading Weather..
+</div>
+<div id="plugin_container" ng-hide="loadingWeather">
+    <div id="digital_container">
+        <div id="clock">
+            <div id="hours">
+                <div class="line"></div>
+                <div id="hours_bg">
+                    <img 
+                      src="js/WeatherClock/lib/jdigiclock/images/clock/clockbg1.png">
+                </div>
+                <img 
+                  src="js/WeatherClock/lib/jdigiclock/images/clock/{{time[0]}}.png" 
+                  id="fhd" 
+                  class="first_digit">
+                <img 
+                  src="js/WeatherClock/lib/jdigiclock/images/clock/{{time[1]}}.png" 
+                  id="shd" 
+                  class="second_digit">
+            </div>
+            <div id="minutes">
+                <div class="line"></div>
+                <div id="am_pm">
+                    <img 
+                      src="js/WeatherClock/lib/jdigiclock/images/clock/{{time[4]+time[5]}}.png">
+                </div>
+                <div id="minutes_bg">
+                  <img 
+                    src="js/WeatherClock/lib/jdigiclock/images/clock/clockbg1.png">
+                </div>
+                <img 
+                  src="js/WeatherClock/lib/jdigiclock/images/clock/{{time[2]}}.png" 
+                  id="fmd" 
+                  class="first_digit"> 
+                <img 
+                  src="js/WeatherClock/lib/jdigiclock/images/clock/{{time[3]}}.png" 
+                  id="smd" 
+                  class="second_digit">
+            </div>
+        </div>
+
+        <div id="weather" style="background-image: url(js/WeatherClock/lib/jdigiclock/images/weather/7.png); background-position: 50% 100%; background-repeat: no-repeat no-repeat;">
+            <div id="local">
+                <p class="city">
+                    {{weather.city}}
+                </p>
+                <p>
+                    {{weather.curr_text}}
+                </p>
+            </div>
+            <div id="temp">
+                <p id="date">
+                   {{currentDate|date:'mediumDate'}} 
+                </p>
+                <p class="temp">
+                    {{weather.curr_temp}}° <span class="metric">F</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

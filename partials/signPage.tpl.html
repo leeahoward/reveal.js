@@ -7,6 +7,7 @@
       {{event.start|date:'shortTime'}} to {{event.end|date:'shortTime'}}
     </p>
     <p ng-repeat="session in event.sessions">{{session.room.name}}</p>
+    <div ng-repeat="session in event.sessions"><img src="images/{{session.room.name|classroomImage}}"></div>
     <hr>
   </section>
   <section ng-transclude>
