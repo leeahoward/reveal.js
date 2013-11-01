@@ -18,7 +18,9 @@ angular.module('WeatherClock',[])
       $scope.loadingWeather=true;
       $scope.weather={};
       $scope.time=getTimeAsString();
+      $scope.currentDate=new Date();
       function loadWeatherData(){
+        $scope.time=getTimeAsString();
         return $http({
           url:$scope.weatherUrl,
           method:'get'
@@ -26,17 +28,22 @@ angular.module('WeatherClock',[])
           function(result){
             $log.info(result);
             angular.extend($scope.weather,result);
-            $scope.time=getTimeAsString();
-            $scope.currentDate=new Date();
             $scope.loadingWeather=false;
           }
         );
       } 
       //loadWeatherData();
       function loadTimer(){
-        loadWeatherData().then(function(){
-          $timeout(loadTimer,60000);
-        });
+        loadWeatherData().then(
+          function(){
+            $log.info('weather data loaded!');
+            $timeout(loadTimer,60000);
+          },
+          function(){
+            $log.info('weather failed to load.  Trying again');
+            $timeout(loadTimer,1000);
+          }
+        );
       }
       loadTimer();
     },

@@ -1,12 +1,11 @@
   <section ng-repeat="event in signPageEvents">
     <hr>
-    <h2>
-      {{event.event_name}}
+    <h2 ng-bind-html-unsafe="event.event_name">
     </h2>
     <p>
       {{event.start|date:'shortTime'}} to {{event.end|date:'shortTime'}}
     </p>
-    <p ng-repeat="session in event.sessions">{{session.room.name}}</p>
+    <p ng-repeat="session in event.sessions" >{{session.room.name}}</p>
     <div ng-repeat="session in event.sessions">
       <img src="images/{{session.room.name|classroomImage}}">
     </div>
